@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Laravel
+apps/api/storage/*.key
+apps/api/bootstrap/cache/
+
+# Angular
+apps/web/.angular/

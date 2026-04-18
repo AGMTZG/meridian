@@ -1,0 +1,38 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: ../../infra/docker/api.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/var/www/html
+    env_file:
+      - ./apps/api/.env
+    depends_on:
+      - postgres
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: ../../infra/docker/web.Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./apps/web:/app
+    depends_on:
+      - api
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
