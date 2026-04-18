@@ -3,7 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Models\User;
-use PragmaRX\Google2FALaravel\Google2FA;
+use PragmaRX\Google2FA\Google2FA;
 
 class TwoFactorService
 {
@@ -30,7 +30,7 @@ class TwoFactorService
             return false;
         }
 
-        $valid = $this->google2fa->verifyKey($user->two_factor_secret, $code);
+        $valid = $this->google2fa->verifyKey($user->two_factor_secret, $code, 4);
 
         if ($valid) {
             $user->update(['two_factor_confirmed_at' => now()]);
@@ -45,7 +45,7 @@ class TwoFactorService
             return false;
         }
 
-        return $this->google2fa->verifyKey($user->two_factor_secret, $code);
+        return $this->google2fa->verifyKey($user->two_factor_secret, $code, 4);
     }
 
     public function disable(User $user): void
